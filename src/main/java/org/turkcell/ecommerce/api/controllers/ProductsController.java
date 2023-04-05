@@ -4,6 +4,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.turkcell.ecommerce.business.abstracs.ProductService;
+import org.turkcell.ecommerce.business.dto.requests.create.CreateProductRequest;
+import org.turkcell.ecommerce.business.dto.requests.update.UpdateProductRequest;
+import org.turkcell.ecommerce.business.dto.response.create.CreateProductResponse;
+import org.turkcell.ecommerce.business.dto.response.get.GetAllProductsResponse;
+import org.turkcell.ecommerce.business.dto.response.get.GetProductResponse;
+import org.turkcell.ecommerce.business.dto.response.update.UpdateProductResponse;
 import org.turkcell.ecommerce.entities.Product;
 
 import java.util.List;
@@ -15,24 +21,24 @@ public class ProductsController {
     private final ProductService service;
 
     @GetMapping
-    public List<Product> getAll() {
+    public List<GetAllProductsResponse> getAll() {
         return service.getAll();
     }
 
     @GetMapping("/{id}")
-    public Product getById(@PathVariable int id) {
+    public GetProductResponse getById(@PathVariable int id) {
         return service.getById(id);
     }
 
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
-    public Product add(@RequestBody Product product) {
-        return service.add(product);
+    public CreateProductResponse add(@RequestBody CreateProductRequest request) {
+        return service.add(request);
     }
 
     @PutMapping("/{id}")
-    public Product update(@PathVariable int id, @RequestBody Product product) {
-        return service.update(id, product);
+    public UpdateProductResponse update(@PathVariable int id, @RequestBody UpdateProductRequest request) {
+        return service.update(id, request);
     }
 
     @DeleteMapping("/{id}")
